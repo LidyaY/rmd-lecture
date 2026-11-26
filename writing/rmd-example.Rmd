@@ -2,9 +2,9 @@
 bibliography: MyLibrary.bib
 csl: apa.csl
 output:
+  pdf_document: default
   html_document:
     df_print: paged
-  pdf_document: default
 ---
 
 
@@ -72,7 +72,7 @@ cor.test(cars$speed, cars$dist)
 
 ```
 
-However, in a manuscript, we want to report these numbers in text. So I will first save the output of the test to an object (`cor_result`) and then directly pull the numbers I need from that object and print them in the text.
+However, in a manuscript, we want to report these numbers in text. So I will first save the output of the test to an object (`cor_result`) and then directly pull the numbers I need from that object and print them in the text:
 
 ```{r include=FALSE}
 
