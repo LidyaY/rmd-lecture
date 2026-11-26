@@ -1,0 +1,95 @@
+---
+bibliography: MyLibrary.bib
+csl: apa.csl
+output:
+  html_document:
+    df_print: paged
+  pdf_document: default
+---
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+library(pacman) # install.packages(pacman)
+
+pacman::p_load(
+  tidyverse,
+  here,
+  broom, # for tidying model output
+  kableExtra # for pretty tables
+)
+
+```
+
+# R Markdown Demo
+
+This is an R Markdown document. It's a file format that allows you to **write and** *format* **text**, while integrating your analysis results and plots.
+
+You turn your R Markdown file into a polished document by clicking the `Knit` button. You can `knit` your `.rmd` file into a Word document, a PDF file, or an html file (which works great if you want to include interactive plots). 
+
+R Markdown also works with citation managers. For example, I use Zotero as a reference manager. I can cite my references [@Henrich2010], and automatically generate a reference list at the end of the document.
+
+## An example
+
+Let's use the dataset `cars`, which comes pre-loaded in RStudio. This is what the data look like:
+
+```{r cars}
+head(cars)
+```
+
+I might want to include these data in a more manuscript-ready way (Table 1). We can also plot these data (Figure 1).
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+
+kable(head(cars), booktabs = TRUE, align = "l", escape = FALSE,
+      caption = "This is the table caption.") %>%
+  kable_styling(full_width = FALSE)
+
+```
+
+
+```{r pressure, echo=FALSE, fig.cap="Speed and distance were positively correlated.", fig.height=4, message=FALSE, warning=FALSE}
+
+ggplot(data = cars,mapping = aes(x = speed, y = dist)) +
+  geom_point()+
+  geom_smooth()+
+  theme_classic()
+
+```
+
+\clearpage
+
+## Reporting analyses
+
+If I've run analyses, I will want to report the results of those analyses directly. For instance, let's report the correlation between `speed` and `dist` in the `cars` data.
+
+Here is the code for running this correlation. I have also printed the results of the code.
+
+```{r}
+
+cor.test(cars$speed, cars$dist)
+
+```
+
+However, in a manuscript, we want to report these numbers in text. So I will first save the output of the test to an object (`cor_result`) and then directly pull the numbers I need from that object and print them in the text.
+
+```{r include=FALSE}
+
+cor_result_tidy <- cor.test(cars$speed, cars$dist) %>% broom::tidy()
+
+# OR
+
+cor_result <- cor.test(cars$speed, cars$dist) 
+
+cor_result_tidy <- broom::tidy(cor_result)
+
+```
+
+Speed and distance were positively correlated (*r* = `r cor_result_tidy$estimate %>% round(.,2)`, *t*(`r cor_result_tidy$parameter`) = `r cor_result_tidy$statistic %>% round(.,2)`, *p* `r format.pval(cor_result_tidy$p.value, digits = 2, eps = 0.001)`).
+
+
+\clearpage
+
+# References
+
