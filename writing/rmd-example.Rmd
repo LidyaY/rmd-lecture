@@ -24,17 +24,19 @@ pacman::p_load(
 
 # R Markdown Demo
 
-This is an R Markdown document. It's a file format that allows you to **write and** *format* **text**, while integrating your analysis results and plots.
+This is an R Markdown document. It's a file format that allows you to **write and** *format* **text**, while integrating your analysis results and plots. 
 
 You turn your R Markdown file into a polished document by clicking the `Knit` button. You can `knit` your `.rmd` file into a Word document, a PDF file, or an html file (which works great if you want to include interactive plots). 
 
-R Markdown also works with citation managers. For example, I use Zotero as a reference manager. I can cite my references [@Henrich2010], and automatically generate a reference list at the end of the document.
+R Markdown also works with citation managers. For example, I use Zotero as a reference manager. I can cite my references [@Henrich2010], and automatically generate a reference list at the end of the document. To do this, you will need to also include your exported Zotero library in the file directory, and link to it in the YAML head ("bibliography: MyLibrary.bib").
+
+You can apply APA formatting by including a `.csl` file in your directory. This is a "formatting file", and the one I'm using here is specifically for APA. Again, you can see that I have to link to it in the YAML header ("csl: apa.csl").
 
 ## An example
 
 Let's use the dataset `cars`, which comes pre-loaded in RStudio. This is what the data look like:
 
-```{r cars}
+```{r}
 head(cars)
 ```
 
@@ -87,7 +89,6 @@ cor_result_tidy <- broom::tidy(cor_result)
 ```
 
 Speed and distance were positively correlated (*r* = `r cor_result_tidy$estimate %>% round(.,2)`, *t*(`r cor_result_tidy$parameter`) = `r cor_result_tidy$statistic %>% round(.,2)`, *p* `r format.pval(cor_result_tidy$p.value, digits = 2, eps = 0.001)`).
-
 
 \clearpage
 

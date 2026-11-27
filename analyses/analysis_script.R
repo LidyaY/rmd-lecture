@@ -1,8 +1,8 @@
-# this is my simple analysis file
+# this is my separate analysis file
 library(tidyverse)
 library(broom)
 
-bogus_data <- read.csv("bogus_data.csv")
+bogus_data <- read.csv("./data/bogus_data.csv")
 
 head(bogus_data)
 
@@ -14,6 +14,7 @@ cor_result <- cor.test(bogus_data$milk_consumption, bogus_data$divorce_rates)
 
 cor_result_tidy <- cor_result %>% broom::tidy()
 
+# save the objects from your analysis results as .rData file
 save(
   mean_milk_consumption,
   mean_divorce_rate,
