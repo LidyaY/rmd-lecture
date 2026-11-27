@@ -1,0 +1,41 @@
+---
+title: "My Manuscript"
+author: "Lidya Yurdum"
+output:
+  pdf_document: default
+  html_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+library(tidyverse)
+library(ggplot2)
+library(broom) #install.packages("broom")
+```
+
+# Introduction
+
+Have a bit of text ***here***.
+
+```{r include=FALSE}
+head(cars)
+
+```
+
+
+```{r echo=FALSE, fig.cap="Speed vs. distance."}
+plot(cars$speed,
+     cars$dist)
+```
+```{r include=FALSE}
+cor_results <- cor.test(cars$speed, cars$dist) %>% tidy()
+
+cor_results$estimate %>% round(digits = 2)
+
+cor_results$p.value %>% format.pval(., eps = .001)
+```
+
+
+Speed and distance were correlated (see Figure 1), *r* = `r cor_results$estimate %>% round(digits = 2)`, p `r cor_results$p.value %>% format.pval(., eps = .001)`.
+
